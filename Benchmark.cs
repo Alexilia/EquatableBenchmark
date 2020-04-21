@@ -7,16 +7,19 @@ namespace EquatableBenchmark {
         List<S_Imp> listImp;
         List<S_Exp> listExp;
         List<S> list;
+        List<S_Default> listDefault;
         [GlobalSetup]
         public void Setup() {
             listImp = new List<S_Imp>(10_000_000);
             listExp = new List<S_Exp>(10_000_000);
             list = new List<S>(10_000_000);
+            listDefault = new List<S_Default>(10_000_000);
 
             for (int i = 0; i < listImp.Capacity; i++) {
                 listImp.Add(new S_Imp(i));
                 listExp.Add(new S_Exp(i));
                 list.Add(new S(i));
+                listDefault.Add(new S_Default(i));
             }
         }
 
@@ -39,6 +42,14 @@ namespace EquatableBenchmark {
             bool x = list.Contains(new S(list.Capacity - 1));
             bool x_ = list.Contains(new S(list.Capacity));
             if (!x || x_)
+                throw new Exception();
+        }
+
+        [Benchmark]
+        public void ContainsBase() {
+            bool x = listDefault.Contains(new S_Default(list.Capacity - 1));
+            bool x_ = listDefault.Contains(new S_Default(list.Capacity));
+            if(!x || x_)
                 throw new Exception();
         }
 
