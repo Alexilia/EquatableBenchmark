@@ -1,8 +1,11 @@
 ﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Jobs;
 using System;
 using System.Collections.Generic;
 
 namespace EquatableBenchmark {
+    [SimpleJob(RuntimeMoniker.Net472)]
+    [SimpleJob(RuntimeMoniker.NetCoreApp30)]
     public class Benchmark {
         List<S_Imp> listImp;
         List<S_Exp> listExp;
